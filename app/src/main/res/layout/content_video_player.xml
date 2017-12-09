@@ -61,6 +61,7 @@
     </FrameLayout>
 
         <ScrollView
+            android:id="@+id/relatedscroll"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -76,9 +77,19 @@
                     android:layout_height="wrap_content" />
 
 
+                <ProgressBar
+                    android:id="@+id/relatedvideoloding"
+                    android:visibility="visible"
+                    style="?android:attr/progressBarStyleLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true"
+                    android:indeterminateTint="@color/colorbars"
+                    android:layout_gravity="center" />
+
                 <LinearLayout
                     android:orientation="vertical"
-                    android:id="@+id/cenas"
+                    android:id="@+id/relatedvideos"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 </LinearLayout>
@@ -89,30 +100,7 @@
         </ScrollView>
 
 
-    <ListView
-        android:visibility="gone"
-        android:id="@+id/relatedvideos"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
-
 </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/progressBarHolder"
-        android:animateLayoutChanges="true"
-        android:visibility="gone"
-        android:alpha="0.4"
-        android:background="#000000"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ProgressBar
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:indeterminate="true"
-            android:layout_gravity="center" />
-    </FrameLayout>
 
 
 </android.widget.RelativeLayout>

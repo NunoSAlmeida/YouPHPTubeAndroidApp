@@ -47,6 +47,7 @@ import android.widget.ListView;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -74,13 +75,11 @@ import static com.youphptube.youphptube.MasterClass.getTimeString;
 
 public class VideoPlayer extends AppCompatActivity implements SurfaceHolder.Callback, MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, VideoControllerView.MediaPlayerControl {
     ArrayList<HashMap<String, String>> RelatedVideosList;
-    private ListView RelatedVideosListView;
-    //private VideoView VideoContentPlayer;
     private String VideoID;
     DisplayMetrics dm;
-    AlphaAnimation inAnimation;
+    /*AlphaAnimation inAnimation;
     AlphaAnimation outAnimation;
-    FrameLayout progressBarHolder;
+    FrameLayout progressBarHolder;*/
     ProgressBar VideoLoadingBar;
     View video_information;
     Spinner QualitySelector;
@@ -98,10 +97,9 @@ public class VideoPlayer extends AppCompatActivity implements SurfaceHolder.Call
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_video_player);
-        progressBarHolder = findViewById(R.id.progressBarHolder);
+       //progressBarHolder = findViewById(R.id.progressBarHolder);
         VideoLoadingBar = findViewById(R.id.videoloding);
         video_information = findViewById(R.id.video_information);
-        RelatedVideosListView = findViewById(R.id.relatedvideos);
         QualitySelector = findViewById(R.id.qualityselector);
 
         videoSurface = findViewById(R.id.videoSurface);
@@ -156,14 +154,15 @@ public class VideoPlayer extends AppCompatActivity implements SurfaceHolder.Call
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    //Getting video information and add view count
-                    //In the future only videoID or URL will be passed and all video information will be get from here
-                    new GetVideo(VideoID).execute();
+                    //Getting related videos list
+                    new GetRelatedVideos().execute();
                 }
             }, 1000);
 
-            //Getting related videos list
-            new GetRelatedVideos().execute();
+            //Getting video information and add view count
+            //In the future only videoID or URL will be passed and all video information will be get from here
+            new GetVideo(VideoID).execute();
+
 
             //Add functions to like, dislike and share buttons
 
@@ -215,8 +214,8 @@ public class VideoPlayer extends AppCompatActivity implements SurfaceHolder.Call
 
                     objIndent.putExtra("VideoInformation", VideoInformation);
                     startActivity(objIndent);
-
-                    StopVideo();
+                    //Stop video in internal player
+                    PauseVideo();
                 }
             });
         }
@@ -237,7 +236,6 @@ public class VideoPlayer extends AppCompatActivity implements SurfaceHolder.Call
 
             AdjustVideoView(true);
             video_information.setVisibility(View.GONE);
-            RelatedVideosListView.setVisibility(View.GONE);
         }
 
         if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -246,7 +244,6 @@ public class VideoPlayer extends AppCompatActivity implements SurfaceHolder.Call
 
             AdjustVideoView(true);
             video_information.setVisibility(View.VISIBLE);
-            RelatedVideosListView.setVisibility(View.VISIBLE);
         }
 
 
@@ -306,7 +303,6 @@ public class VideoPlayer extends AppCompatActivity implements SurfaceHolder.Call
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         player.setDisplay(holder);
-        //player.prepareAsync();
     }
 
     @Override
@@ -407,10 +403,6 @@ public class VideoPlayer extends AppCompatActivity implements SurfaceHolder.Call
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            inAnimation = new AlphaAnimation(0f, 1f);
-            inAnimation.setDuration(200);
-            progressBarHolder.setAnimation(inAnimation);
-            progressBarHolder.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -484,10 +476,6 @@ public class VideoPlayer extends AppCompatActivity implements SurfaceHolder.Call
                 }
             }
 
-            outAnimation = new AlphaAnimation(1f, 0f);
-            outAnimation.setDuration(200);
-            progressBarHolder.setAnimation(outAnimation);
-            progressBarHolder.setVisibility(View.GONE);
 
 
         }
@@ -509,10 +497,6 @@ public class VideoPlayer extends AppCompatActivity implements SurfaceHolder.Call
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            inAnimation = new AlphaAnimation(0f, 1f);
-            inAnimation.setDuration(200);
-            progressBarHolder.setAnimation(inAnimation);
-            progressBarHolder.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -636,10 +620,7 @@ public class VideoPlayer extends AppCompatActivity implements SurfaceHolder.Call
             ImageView ChannelImage = findViewById(R.id.creator_image);
             Picasso.with(VideoPlayer.this).load(VideoInformation.CreatorImage).into(ChannelImage);
 
-            outAnimation = new AlphaAnimation(1f, 0f);
-            outAnimation.setDuration(200);
-            progressBarHolder.setAnimation(outAnimation);
-            progressBarHolder.setVisibility(View.GONE);
+
         }
     }
 
@@ -659,6 +640,11 @@ public class VideoPlayer extends AppCompatActivity implements SurfaceHolder.Call
     }
 
     void StopVideo(){
+        if (player.isPlaying()){
+            player.stop();
+        }
+    }
+    void PauseVideo(){
         if (player.isPlaying()){
             player.pause();
         }
@@ -730,9 +716,12 @@ public class VideoPlayer extends AppCompatActivity implements SurfaceHolder.Call
 
 
     private class GetRelatedVideos extends AsyncTask<Void, Void, Void> {
+        LinearLayout relatedvideos;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            relatedvideos = findViewById(R.id.relatedvideos);
+            relatedvideos.removeAllViews();
         }
 
         @Override
@@ -800,7 +789,11 @@ public class VideoPlayer extends AppCompatActivity implements SurfaceHolder.Call
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
 
-            LinearLayout cena = findViewById(R.id.cenas);
+            ProgressBar relatedvideoloding = findViewById(R.id.relatedvideoloding);
+            relatedvideoloding.setVisibility(View.GONE);
+
+            ScrollView relatedscroll = findViewById(R.id.relatedscroll);
+            relatedscroll.scrollTo(0,0);
 
 
             final VideoAdaptor adapter=new VideoAdaptor(VideoPlayer.this, RelatedVideosList, R.layout.video_list_horizontal);
@@ -813,27 +806,26 @@ public class VideoPlayer extends AppCompatActivity implements SurfaceHolder.Call
                     public void onClick(View v) {
                         String VideoID = v.getTag().toString();
                         if (VideoID!=null) {
+                            ScrollView relatedscroll = findViewById(R.id.relatedscroll);
+                            relatedscroll.scrollTo(0,0);
+                            ProgressBar relatedvideoloding = findViewById(R.id.relatedvideoloding);
+                            relatedvideoloding.setVisibility(View.VISIBLE);
+                            relatedvideos.removeAllViews();
                             new GetVideo(VideoID).execute();
+                            final Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //Getting related videos list
+                                    new GetRelatedVideos().execute();
+                                }
+                            }, 1000);
                         }
                     }
 
                 });
-                cena.addView(item);
+                relatedvideos.addView(item);
             }
-
-
-            RelatedVideosListView.setAdapter(adapter);
-            RelatedVideosListView.setClickable(true);
-            RelatedVideosListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-                @Override
-                public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                    String VideoID = RelatedVideosList.get(position).get("VideoID");
-                    if (VideoID!=null) {
-                        new GetVideo(VideoID).execute();
-                    }
-                }
-            });
         }
     }
 
