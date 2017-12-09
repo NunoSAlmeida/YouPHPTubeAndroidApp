@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:baselineAligned="false"
+    android:background="@drawable/search_border">
+
+    <LinearLayout
+        android:layout_width="0sp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"
+        android:layout_marginStart="3dp"
+        android:layout_weight="0.1">
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginStart="5sp"
+            android:id="@+id/ImagemActionItem"
+            android:src="@drawable/ic_tv_black_24dp"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0sp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="0.9">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/ActionType"
+            android:text=""
+            android:layout_weight="0.3"
+            android:paddingStart="10sp"
+            android:paddingEnd="0sp"
+            android:gravity="center_vertical"
+            android:textStyle="normal|bold"
+            android:textSize="@dimen/normal_text_size"
+            android:textColor="@color/colorPrimaryDark"/>
+
+
+    </LinearLayout>
+
+
+
+
+
+
+
+
+</LinearLayout>

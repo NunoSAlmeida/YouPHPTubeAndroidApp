@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:textColor="@color/colortextbars"
+    android:minHeight="300sp"
+    android:minWidth="300sp"
+    android:background="@drawable/search_border">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/cabecalho"
+        android:background="@drawable/search_border_2"
+        android:padding="8sp">
+
+        <TextView
+            android:layout_weight="1.0"
+            android:layout_width="0sp"
+            android:layout_height="match_parent"
+            android:text="@string/select_device"
+            android:textColor="@color/colortextbars"
+            android:textSize="@dimen/normal_text_size"
+            android:textStyle="normal|bold"
+            android:layout_marginStart="10sp"/>
+
+        <ProgressBar
+            android:layout_weight="0.1"
+            android:layout_width="0sp"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_height="25sp"
+            android:indeterminate="true"
+            android:layout_gravity="end"
+            android:indeterminateTintMode="src_atop"
+            android:indeterminateTint="@color/colorbars"/>
+
+    </LinearLayout>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/ListaSelectAction"
+        android:divider="@drawable/background">
+    </ListView>
+
+    <TextView
+        android:id="@+id/emptyElement"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/no_devices_found"
+        android:textColor="#525252"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textSize="19.0sp" />
+
+
+
+</LinearLayout>

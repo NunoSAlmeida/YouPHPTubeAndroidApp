@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="0dip" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="2sp"
+        android:paddingBottom="2sp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:scaleType="fitXY"
+            android:id="@+id/list_image"
+            android:layout_width="match_parent"
+            android:layout_height="180dip"
+            android:paddingTop="2sp"
+            android:paddingLeft="15sp"
+            android:paddingRight="15sp"
+            android:contentDescription="@string/videoname"
+            android:src="@drawable/no_image"/>
+
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_gravity="end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/defaulttime"
+            android:background="@color/colorblack"
+            android:layout_marginTop="-35sp"
+            android:layout_marginEnd="20sp"
+            android:padding="2sp"
+            android:textColor="#ffffff"
+            android:typeface="sans"
+            android:textSize="12sp" />
+</LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50sp"
+            android:layout_marginTop="5sp"
+            android:paddingTop="2sp"
+            android:paddingBottom="2sp"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+
+            <LinearLayout
+                android:layout_width="0sp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15sp"
+                android:layout_weight="0.1">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/videouserimage"
+                    android:layout_width="30sp"
+                    android:layout_height="30sp"
+                    android:src="@drawable/no_image"
+                    app:civ_border_color="@color/colorblack"
+                    app:civ_border_width="1dp" />
+
+
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginStart="10sp"
+                android:layout_width="0sp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="0sp"
+                    android:layout_weight=".4"
+                    android:layout_gravity="start|top"
+                    android:layout_marginEnd="5dp"
+                    android:gravity="start"
+                    android:text="@string/videoname"
+                    android:textColor="#040404"
+                    android:typeface="sans"
+                    android:textSize="15sp"
+                    android:textStyle="normal"/>
+
+                <TextView
+                    android:id="@+id/nomeuser"
+                    android:layout_width="match_parent"
+                    android:layout_height="0sp"
+                    android:layout_weight=".25"
+                    android:layout_gravity="start|top"
+                    android:layout_marginEnd="5dp"
+                    android:gravity="start"
+                    android:text="@string/AutorName"
+                    android:textColor="#939393"
+                    android:typeface="sans"
+                    android:textSize="12sp"
+                    android:textStyle="normal"/>
+
+                <TextView
+                    android:id="@+id/views_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="0sp"
+                    android:layout_weight=".25"
+                    android:layout_gravity="start|top"
+                    android:layout_marginEnd="5dp"
+                    android:gravity="start"
+                    android:text="@string/AutorName"
+                    android:textColor="#939393"
+                    android:typeface="sans"
+                    android:textSize="12sp"
+                    android:textStyle="normal"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+</LinearLayout>

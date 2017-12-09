@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.youphptube.youphptube.VideoPlayer"
+    tools:showIn="@layout/activity_video_player">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/videowindow"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+    <FrameLayout
+        android:background="#ffffff"
+        android:id="@+id/videoframe"
+        android:layout_width="match_parent"
+        android:layout_height="230dp">
+
+        <SurfaceView
+            android:id="@+id/videoSurface"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="top"/>
+
+        <VideoView
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/videoplayler"
+            android:layout_gravity="top" />
+
+        <ProgressBar
+            android:id="@+id/videoloding"
+            android:visibility="invisible"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:layout_gravity="center" />
+
+
+        <Spinner
+            android:textAlignment="textEnd"
+            android:layout_gravity="end|top"
+            android:drawSelectorOnTop="true"
+            android:entries="@array/VideoTypes"
+            android:id="@+id/qualityselector"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </Spinner>
+
+
+
+    </FrameLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <include
+                    android:id="@+id/video_information"
+                    layout="@layout/video_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:id="@+id/cenas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </ScrollView>
+
+
+    <ListView
+        android:visibility="gone"
+        android:id="@+id/relatedvideos"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/progressBarHolder"
+        android:animateLayoutChanges="true"
+        android:visibility="gone"
+        android:alpha="0.4"
+        android:background="#000000"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:layout_gravity="center" />
+    </FrameLayout>
+
+
+</android.widget.RelativeLayout>
