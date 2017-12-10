@@ -28,125 +28,65 @@
         android:layout_marginRight="5sp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="50sp">
+        android:layout_height="52sp">
 
-        <LinearLayout
-            android:id="@+id/likeblock"
-            android:orientation="vertical"
+
+        <TextView
+            android:drawableTop="@drawable/ic_thumb_up_black_24dp"
+            android:id="@+id/like"
+            android:text="@string/zero"
+            android:textColor="@color/colorblack"
+            android:textAlignment="center"
             android:layout_weight="0.25"
             android:layout_width="0sp"
-            android:layout_height="match_parent">
+            android:layout_marginTop="10dp"
+            android:layout_height="match_parent" />
 
-            <ImageView
-                android:id="@+id/like"
-                android:layout_margin="10sp"
-                android:layout_width="match_parent"
-                android:layout_height="24sp"
-                android:src="@drawable/ic_thumb_up_black_24dp" />
-
-            <TextView
-                android:id="@+id/likecount"
-                android:text="@string/zero"
-                android:textColor="@color/colorblack"
-                android:textAlignment="center"
-                android:layout_width="match_parent"
-                android:layout_marginTop="-10dp"
-                android:layout_height="20sp" />
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/dislikeblock"
-            android:orientation="vertical"
+        <TextView
+            android:drawableTop="@drawable/ic_thumb_down_black_24dp"
+            android:id="@+id/dislike"
+            android:text="@string/zero"
+            android:textColor="@color/colorblack"
+            android:textAlignment="center"
             android:layout_weight="0.25"
             android:layout_width="0sp"
-            android:layout_height="match_parent">
+            android:layout_marginTop="10dp"
+            android:layout_height="match_parent" />
 
-            <ImageView
-                android:id="@+id/dislike"
-                android:layout_margin="10sp"
-                android:layout_width="match_parent"
-                android:layout_height="24sp"
-                android:src="@drawable/ic_thumb_down_black_24dp" />
-
-            <TextView
-                android:id="@+id/dislikecount"
-                android:text="@string/zero"
-                android:textColor="@color/colorblack"
-                android:textAlignment="center"
-                android:layout_width="match_parent"
-                android:layout_marginTop="-10dp"
-                android:layout_height="20sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/shareblock"
-            android:orientation="vertical"
+        <TextView
+            android:id="@+id/share"
+            android:drawableTop="@drawable/ic_share_black_24dp"
+            android:text="@string/share"
+            android:textColor="@color/colorblack"
+            android:textAlignment="center"
             android:layout_weight="0.25"
             android:layout_width="0sp"
-            android:layout_height="match_parent">
+            android:layout_marginTop="10dp"
+            android:layout_height="match_parent" />
 
-            <ImageView
-                android:id="@+id/share"
-                android:layout_margin="10sp"
-                android:layout_width="match_parent"
-                android:layout_height="24sp"
-                android:src="@drawable/ic_share_black_24dp" />
 
-            <TextView
-                android:text="@string/share"
-                android:textColor="@color/colorblack"
-                android:textAlignment="center"
-                android:layout_width="match_parent"
-                android:layout_marginTop="-10dp"
-                android:layout_height="20sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/playlistblock"
-            android:orientation="vertical"
+        <TextView
+            android:id="@+id/addto"
+            android:drawableTop="@drawable/ic_playlist_add_black_24dp"
+            android:text="@string/AddToPlaylist"
+            android:textColor="@color/colorblack"
+            android:textAlignment="center"
             android:layout_weight="0.25"
             android:layout_width="0sp"
-            android:layout_height="match_parent">
+            android:layout_marginTop="10dp"
+            android:layout_height="match_parent" />
 
-            <ImageView
-                android:id="@+id/addtoplaylist"
-                android:layout_margin="10sp"
-                android:layout_width="match_parent"
-                android:layout_height="24sp"
-                android:src="@drawable/ic_playlist_add_black_24dp" />
 
-            <TextView
-                android:text="@string/AddToPlaylist"
-                android:textColor="@color/colorblack"
-                android:textAlignment="center"
-                android:layout_width="match_parent"
-                android:layout_marginTop="-10dp"
-                android:layout_height="20sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/playonblock"
-            android:orientation="vertical"
+        <TextView
+            android:id="@+id/playon"
+            android:drawableTop="@drawable/ic_tv_black_24dp"
+            android:text="@string/PlayOnTv"
+            android:textColor="@color/colorblack"
+            android:textAlignment="center"
             android:layout_weight="0.25"
             android:layout_width="0sp"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/playontv"
-                android:layout_margin="10sp"
-                android:layout_width="match_parent"
-                android:layout_height="24sp"
-                android:src="@drawable/ic_tv_black_24dp" />
-
-            <TextView
-                android:text="@string/PlayOnTv"
-                android:textColor="@color/colorblack"
-                android:textAlignment="center"
-                android:layout_width="match_parent"
-                android:layout_marginTop="-10dp"
-                android:layout_height="20sp" />
-        </LinearLayout>
+            android:layout_marginTop="10dp"
+            android:layout_height="match_parent" />
 
 
     </LinearLayout>
@@ -157,6 +97,7 @@
         android:layout_marginRight="5sp"/>
 
     <LinearLayout
+        android:baselineAligned="false"
         android:layout_marginLeft="5sp"
         android:layout_marginRight="5sp"
         android:orientation="horizontal"

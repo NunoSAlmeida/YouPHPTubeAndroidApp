@@ -68,6 +68,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import javax.xml.transform.Source;
 
@@ -114,7 +115,7 @@ public class VideoPlayer extends AppCompatActivity implements SurfaceHolder.Call
                 if (PlaySource != null) {
                     if (QualitySelector.getSelectedItemPosition() != PlaySource.SelectedID){
                         for (int i = 0; i < CurrentVideo.Sources.size(); i++) {
-                            if (CurrentVideo.Sources.get(i).Quality == QualitySelector.getSelectedItem().toString().trim()) {
+                            if (CurrentVideo.Sources.get(i).Quality.equals(QualitySelector.getSelectedItem().toString().trim())) {
                                 PlaySource = CurrentVideo.Sources.get(i);
                                 PlaySource.SelectedID = i;
                                 //Uri uri = Uri.parse(PlaySource.Src);
@@ -167,15 +168,15 @@ public class VideoPlayer extends AppCompatActivity implements SurfaceHolder.Call
             //Add functions to like, dislike and share buttons
 
 
-            LinearLayout likeblokaction = findViewById(R.id.likeblock);
-            likeblokaction.setOnClickListener(new View.OnClickListener() {
+            TextView likebutton = findViewById(R.id.like);
+            likebutton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     new LikeVideo(VideoID, "like").execute();
                 }
             });
 
-            LinearLayout dislikeaction = findViewById(R.id.dislikeblock);
+            TextView dislikeaction = findViewById(R.id.dislike);
             dislikeaction.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -183,7 +184,7 @@ public class VideoPlayer extends AppCompatActivity implements SurfaceHolder.Call
                 }
             });
 
-            LinearLayout shareaction = findViewById(R.id.shareblock);
+            TextView shareaction = findViewById(R.id.share);
             shareaction.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -191,7 +192,7 @@ public class VideoPlayer extends AppCompatActivity implements SurfaceHolder.Call
                 }
             });
 
-            final LinearLayout playlist = findViewById(R.id.playlistblock);
+            TextView playlist = findViewById(R.id.addto);
             playlist.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -199,7 +200,7 @@ public class VideoPlayer extends AppCompatActivity implements SurfaceHolder.Call
                 }
             });
 
-            LinearLayout PlayOnTv = findViewById(R.id.playonblock);
+            TextView PlayOnTv = findViewById(R.id.playon);
             PlayOnTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -256,7 +257,7 @@ public class VideoPlayer extends AppCompatActivity implements SurfaceHolder.Call
         int height = dm.heightPixels;
         int width = dm.widthPixels;
 
-        Double mm = Double.valueOf(width / 1.77);
+        Double mm = (width / 1.77);
 
         FrameLayout ff = findViewById(R.id.videoframe);
 
@@ -451,28 +452,22 @@ public class VideoPlayer extends AppCompatActivity implements SurfaceHolder.Call
             super.onPostExecute(LikeInformation);
 
             if (LikeInformation.VideoID != null) {
-                TextView Likes = findViewById(R.id.likecount);
-                Likes.setText(LikeInformation.Like.toString());
+                TextView Likes = findViewById(R.id.like);
+                Likes.setText(String.valueOf(LikeInformation.Like));
 
-                TextView DisLikes = findViewById(R.id.dislikecount);
-                DisLikes.setText(LikeInformation.DisLike.toString());
+                TextView DisLikes = findViewById(R.id.dislike);
+                DisLikes.setText(String.valueOf(LikeInformation.DisLike));
 
                 if (LikeInformation.MyVote == 1) {
                     Toast.makeText(getApplicationContext(), getString(R.string.AddedToLikeList), Toast.LENGTH_LONG).show();
-                    ImageView imglike = findViewById(R.id.like);
-                    ImageView imgdislike = findViewById(R.id.dislike);
-                    imglike.setImageDrawable(GetLikeButton(R.drawable.ic_thumb_up_black_24dp, Color.BLUE));
-                    imgdislike.setImageDrawable(GetLikeButton(R.drawable.ic_thumb_down_black_24dp, Color.BLACK));
+                    Likes.setCompoundDrawablesWithIntrinsicBounds(null, GetLikeButton(R.drawable.ic_thumb_up_black_24dp, Color.BLUE), null, null);
+                    DisLikes.setCompoundDrawablesWithIntrinsicBounds(null, GetLikeButton(R.drawable.ic_thumb_down_black_24dp, Color.BLACK), null, null);
                 } else if (LikeInformation.MyVote == -1) {
-                    ImageView imglike = findViewById(R.id.like);
-                    ImageView imgdislike = findViewById(R.id.dislike);
-                    imglike.setImageDrawable(GetLikeButton(R.drawable.ic_thumb_up_black_24dp, Color.BLACK));
-                    imgdislike.setImageDrawable(GetLikeButton(R.drawable.ic_thumb_down_black_24dp, Color.BLUE));
+                    Likes.setCompoundDrawablesWithIntrinsicBounds(null, GetLikeButton(R.drawable.ic_thumb_up_black_24dp, Color.BLACK), null, null);
+                    DisLikes.setCompoundDrawablesWithIntrinsicBounds(null, GetLikeButton(R.drawable.ic_thumb_down_black_24dp, Color.BLUE), null, null);
                 } else {
-                    ImageView imglike = findViewById(R.id.like);
-                    ImageView imgdislike = findViewById(R.id.dislike);
-                    imglike.setImageDrawable(GetLikeButton(R.drawable.ic_thumb_up_black_24dp, Color.BLACK));
-                    imgdislike.setImageDrawable(GetLikeButton(R.drawable.ic_thumb_down_black_24dp, Color.BLACK));
+                    Likes.setCompoundDrawablesWithIntrinsicBounds(null, GetLikeButton(R.drawable.ic_thumb_up_black_24dp, Color.BLACK), null, null);
+                    DisLikes.setCompoundDrawablesWithIntrinsicBounds(null, GetLikeButton(R.drawable.ic_thumb_down_black_24dp, Color.BLACK), null, null);
                 }
             }
 
@@ -582,28 +577,22 @@ public class VideoPlayer extends AppCompatActivity implements SurfaceHolder.Call
             TextView ViewsCount = findViewById(R.id.views_count);
             ViewsCount.setText(VideoInformation.views_count + " " + getString(R.string.views));
 
-            TextView Likes = findViewById(R.id.likecount);
-            Likes.setText(VideoInformation.likes.toString());
+            TextView Likes = findViewById(R.id.like);
+            Likes.setText(String.valueOf(VideoInformation.likes));
 
-            TextView DisLikes = findViewById(R.id.dislikecount);
-            DisLikes.setText(VideoInformation.dislikes.toString());
+            TextView DisLikes = findViewById(R.id.dislike);
+            DisLikes.setText(String.valueOf(VideoInformation.dislikes));
 
 
             if (VideoInformation.myVote == 1){
-                ImageView imglike = findViewById(R.id.like);
-                ImageView imgdislike = findViewById(R.id.dislike);
-                imglike.setImageDrawable(GetLikeButton(R.drawable.ic_thumb_up_black_24dp, Color.BLUE));
-                imgdislike.setImageDrawable(GetLikeButton(R.drawable.ic_thumb_down_black_24dp, Color.BLACK));
+                Likes.setCompoundDrawablesWithIntrinsicBounds(null, GetLikeButton(R.drawable.ic_thumb_up_black_24dp, Color.BLUE), null, null);
+                DisLikes.setCompoundDrawablesWithIntrinsicBounds(null, GetLikeButton(R.drawable.ic_thumb_down_black_24dp, Color.BLACK), null, null);
             }else if (VideoInformation.myVote == -1){
-                ImageView imglike = findViewById(R.id.like);
-                ImageView imgdislike = findViewById(R.id.dislike);
-                imglike.setImageDrawable(GetLikeButton(R.drawable.ic_thumb_up_black_24dp, Color.BLACK));
-                imgdislike.setImageDrawable(GetLikeButton(R.drawable.ic_thumb_down_black_24dp, Color.BLUE));
+                Likes.setCompoundDrawablesWithIntrinsicBounds(null, GetLikeButton(R.drawable.ic_thumb_up_black_24dp, Color.BLACK), null, null);
+                DisLikes.setCompoundDrawablesWithIntrinsicBounds(null, GetLikeButton(R.drawable.ic_thumb_down_black_24dp, Color.BLUE), null, null);
             }else{
-                ImageView imglike = findViewById(R.id.like);
-                ImageView imgdislike = findViewById(R.id.dislike);
-                imglike.setImageDrawable(GetLikeButton(R.drawable.ic_thumb_up_black_24dp, Color.BLACK));
-                imgdislike.setImageDrawable(GetLikeButton(R.drawable.ic_thumb_down_black_24dp, Color.BLACK));
+                Likes.setCompoundDrawablesWithIntrinsicBounds(null, GetLikeButton(R.drawable.ic_thumb_up_black_24dp, Color.BLACK), null, null);
+                DisLikes.setCompoundDrawablesWithIntrinsicBounds(null, GetLikeButton(R.drawable.ic_thumb_down_black_24dp, Color.BLACK), null, null);
             }
 
             //Uri uri= Uri.parse("https://live.youphptube.com:444/live/59be13fe009a6/index.m3u8");
@@ -692,7 +681,7 @@ public class VideoPlayer extends AppCompatActivity implements SurfaceHolder.Call
         ArrayAdapter<String> adapter;
         List<String> VideoFormats = new ArrayList<>();
         for (int i=0; i< CurrentVideo.Sources.size(); i++){
-            if (CurrentVideo.Sources.get(i).Src == PlaySource.Src){
+            if (CurrentVideo.Sources.get(i).Src.equals(PlaySource.Src)){
                 //This is the selected source
                 PlaySource.SelectedID = i;
             }
@@ -755,10 +744,6 @@ public class VideoPlayer extends AppCompatActivity implements SurfaceHolder.Call
 
                         RelatedVideosList.add(Video);
 
-                        //We want a maximum of 16 videos to this block
-                        if (RelatedVideosList.size()>= 16){
-                            i = Videos.length();
-                        }
 
                     }
                 } catch (final JSONException e) {
@@ -798,33 +783,50 @@ public class VideoPlayer extends AppCompatActivity implements SurfaceHolder.Call
 
             final VideoAdaptor adapter=new VideoAdaptor(VideoPlayer.this, RelatedVideosList, R.layout.video_list_horizontal);
             final int adapterCount = adapter.getCount();
-            for (int i = 0; i < adapterCount; i++) {
-                View item = adapter.getView(i, null, null);
-                item.setTag(RelatedVideosList.get(i).get("VideoID"));
-                item.setOnClickListener(new AdapterView.OnClickListener(){
-                    @Override
-                    public void onClick(View v) {
-                        String VideoID = v.getTag().toString();
-                        if (VideoID!=null) {
-                            ScrollView relatedscroll = findViewById(R.id.relatedscroll);
-                            relatedscroll.scrollTo(0,0);
-                            ProgressBar relatedvideoloding = findViewById(R.id.relatedvideoloding);
-                            relatedvideoloding.setVisibility(View.VISIBLE);
-                            relatedvideos.removeAllViews();
-                            new GetVideo(VideoID).execute();
-                            final Handler handler = new Handler();
-                            handler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    //Getting related videos list
-                                    new GetRelatedVideos().execute();
-                                }
-                            }, 1000);
-                        }
-                    }
 
-                });
-                relatedvideos.addView(item);
+            //Lets do a random video list
+            //We want a maximum of 16 videos to this block
+            ArrayList<Integer> RandomVideos = new ArrayList<>();
+            Random r = new Random();
+            for (int i = 0; i<16; i++){
+                int RandomID = r.nextInt(RelatedVideosList.size() - 0) + 0;
+                if (RandomVideos.contains(RandomID)){
+                    i = i-1;
+                }else{
+                    RandomVideos.add(RandomID);
+                }
+            }
+
+            for (int i = 0; i < adapterCount; i++) {
+                if (RandomVideos.contains(i)) {
+                    View item = adapter.getView(i, null, null);
+                    item.setTag(RelatedVideosList.get(i).get("VideoID"));
+                    item.setOnClickListener(new AdapterView.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            String VideoID = v.getTag().toString();
+                            if (VideoID != null) {
+                                ScrollView relatedscroll = findViewById(R.id.relatedscroll);
+                                relatedscroll.scrollTo(0, 0);
+                                ProgressBar relatedvideoloding = findViewById(R.id.relatedvideoloding);
+                                relatedvideoloding.setVisibility(View.VISIBLE);
+                                relatedvideos.removeAllViews();
+                                new GetVideo(VideoID).execute();
+                                final Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        //Getting related videos list
+                                        new GetRelatedVideos().execute();
+                                    }
+                                }, 1000);
+
+                            }
+                        }
+
+                    });
+                    relatedvideos.addView(item);
+                }
             }
         }
     }
