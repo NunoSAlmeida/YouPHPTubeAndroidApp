@@ -711,6 +711,7 @@ public class VideoPlayer extends AppCompatActivity implements SurfaceHolder.Call
             super.onPreExecute();
             relatedvideos = findViewById(R.id.relatedvideos);
             relatedvideos.removeAllViews();
+            RelatedVideosList = new ArrayList<>();
         }
 
         @Override
@@ -774,6 +775,7 @@ public class VideoPlayer extends AppCompatActivity implements SurfaceHolder.Call
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
 
+
             ProgressBar relatedvideoloding = findViewById(R.id.relatedvideoloding);
             relatedvideoloding.setVisibility(View.GONE);
 
@@ -786,12 +788,14 @@ public class VideoPlayer extends AppCompatActivity implements SurfaceHolder.Call
 
             //Lets do a random video list
             //We want a maximum of 16 videos to this block
+            int maxr = 16;
+            if (RelatedVideosList.size()<maxr) maxr = RelatedVideosList.size();
             ArrayList<Integer> RandomVideos = new ArrayList<>();
             Random r = new Random();
-            for (int i = 0; i<16; i++){
-                int RandomID = r.nextInt(RelatedVideosList.size() - 0) + 0;
+            for (int i = 0; i<maxr; i++){
+                int RandomID = r.nextInt(RelatedVideosList.size());
                 if (RandomVideos.contains(RandomID)){
-                    i = i-1;
+                    i = i - 1;
                 }else{
                     RandomVideos.add(RandomID);
                 }

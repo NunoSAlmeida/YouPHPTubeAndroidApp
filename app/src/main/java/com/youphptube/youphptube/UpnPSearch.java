@@ -87,9 +87,19 @@ public class UpnPSearch extends AppCompatActivity {
         });
         cp.start();
         //cp.search("ST: urn:schemas-upnp-org:service:AVTransport:1");
-        cp.search();
 
 
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                cp.search();
+            }
+        };
+
+        thread.start();
+
+
+        //cp.search();
     }
 
 
